@@ -37,3 +37,53 @@ button {
     border: 0;
     border-radius: 999px;
 }
+
+
+.info-lokasi {
+  margin-top: 2rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.jam-buka {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+}
+
+.jam-buka li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.info-alamat address {
+  font-style: normal;
+  line-height: 1.5;
+  margin: 0.5rem 0 1rem;
+}
+
+.tombol-lokasi {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #4b2e1e;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.tombol-lokasi:hover {
+  background-color: #33200f;
+}
