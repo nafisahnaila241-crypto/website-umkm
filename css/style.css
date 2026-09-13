@@ -13,8 +13,8 @@ body {
 
 .hero{
     padding: 36px;
-    color: white;
-    background: #6f3b1f;
+    color: rgb(20, 15, 15);
+    background: #6bc7ef;
     border-radius: 24px;
 }
 
@@ -30,10 +30,10 @@ body {
 
 button {
     padding: 12px 18px;
-    color: #2f2118;
+    color: #170d08;
     font-weight: 700;
     cursor: pointer;
-    background: #ffd166;
+    background: #708eb0;
     border: 0;
     border-radius: 999px;
 }
@@ -41,49 +41,4 @@ button {
 
 .info-lokasi {
   margin-top: 2rem;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .info-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.jam-buka {
-  list-style: none;
-  padding: 0;
-  margin: 0.5rem 0 0;
-}
-
-.jam-buka li {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.info-alamat address {
-  font-style: normal;
-  line-height: 1.5;
-  margin: 0.5rem 0 1rem;
-}
-
-.tombol-lokasi {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background-color: #4b2e1e;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-.tombol-lokasi:hover {
-  background-color: #33200f;
 }
