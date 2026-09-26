@@ -255,3 +255,8 @@ tbody tr:hover td, tbody tr:hover th { background: #fff8ef; }
   .page > section:not(.hero) { padding: 22px; }
   .page table { display: block; overflow-x: auto; white-space: nowrap; }
 }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; margin-bottom: 6px; }
+fieldset { margin: 0 0 16px; }
+#preview-form { padding: 16px; white-space: pre-wrap; background: white; border: 1px solid #dccbbc; }
