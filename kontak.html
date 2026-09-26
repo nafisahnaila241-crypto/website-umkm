@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kontak Kopi Nusa - Website UMKM</title>
+    <title>Kontak Kopakopi - Website UMKM</title>
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/form.js" defer></script>
   </head>
@@ -11,7 +11,7 @@
     <a class="skip-link" href="#konten">Lewati ke konten utama</a>
     <header class="site-header">
       <nav class="nav" aria-label="Navigasi utama">
-        <a class="brand" href="index.html">Kopi Nusa</a>
+        <a class="brand" href="index.html">Kopakopi</a>
         <ul>
           <li><a href="index.html">Beranda</a></li>
           <li><a href="tentang.html">Tentang Kami</a></li>
@@ -22,7 +22,7 @@
       </nav>
     </header>
     <main id="konten" class="page">
-      <h1>Kontak Kopi Nusa</h1>
+      <h1>Kontak Kopakopi</h1>
       <p>Silakan kirim pertanyaan tentang produk, pesanan, atau kerja sama.</p>
 
       <form id="form-kontak" action="#" method="post">
@@ -35,6 +35,18 @@
           <label for="email">Email</label>
           <input id="email" name="email" type="email" autocomplete="email" required />
         </div>
+
+        <div class="field">
+          <label for="whatsapp">WhatsApp</label>
+          <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" required />
+        </div>
+
+        <fieldset>
+          <legend>Waktu dihubungi yang diinginkan</legend>
+          <label><input type="radio" name="waktu" value="pagi" required /> Pagi (08.00-12.00)</label>
+          <label><input type="radio" name="waktu" value="siang" /> Siang (12.00-16.00)</label>
+          <label><input type="radio" name="waktu" value="sore" /> Sore (16.00-20.00)</label>
+        </fieldset>
 
         <div class="field">
           <label for="paket">Paket yang diminati</label>
@@ -58,7 +70,7 @@
           <textarea id="pesan" name="pesan" rows="5" required minlength="10"></textarea>
         </div>
 
-        <button type="submit">Tampilkan Preview</button>
+        <button type="submit">Kirim</button>
       </form>
 
       <section aria-labelledby="preview-title">
@@ -67,7 +79,7 @@
       </section>
     </main>
     <footer class="site-footer">
-      <p>&copy; 2026 Kopi Nusa. Data pada halaman ini bersifat dummy.</p>
+      <p>&copy; 2026 Kopakopi. Data pada halaman ini bersifat dummy.</p>
     </footer>
   </body>
 </html>
