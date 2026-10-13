@@ -30,6 +30,15 @@
 
   --radius-control: 12px;
   --radius-card: 20px;
+
+  /* Token spacing P05 (dipakai bersama gap pada layout P06) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
 }
 
 * { box-sizing: border-box; }
@@ -286,3 +295,72 @@ tbody tr:hover td, tbody tr:hover th { background: #fff8ef; }
 .field label { display: block; margin-bottom: 6px; }
 fieldset { margin: 0 0 16px; }
 #preview-form { padding: 16px; white-space: pre-wrap; background: white; border: 1px solid #dccbbc; }
+
+/* ===== P06: Layout halaman Produk (tanpa media query; responsif menunggu P07) ===== */
+
+/* GRID: area dua dimensi. Baris 1 = intro (melebar), baris 2 = kategori | harga */
+.produk-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  column-gap: var(--space-6);
+  row-gap: var(--space-5);
+  align-items: start;
+}
+.produk-layout > .produk-intro { grid-column: 1 / -1; }
+.page.produk-layout > section:not(.hero) { margin-top: 0; }
+
+/* FLEX 1: intro (judul + paragraf) satu kolom vertikal */
+.produk-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.produk-intro > h1 {
+  margin: 0;
+  color: var(--coffee-950);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+.produk-intro > p { max-width: 680px; margin: 0; color: var(--muted); }
+
+/* FLEX 2: daftar kategori, satu kolom kartu */
+.kategori-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: kategori;
+}
+.kategori-list li {
+  position: relative; /* containing block untuk penanda nomor */
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-7);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-control);
+}
+/* POSITIONING lokal: penanda nomor menempel di pojok kiri-atas kartu */
+.kategori-list li::before {
+  counter-increment: kategori;
+  content: counter(kategori);
+  content: counter(kategori) / "";
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  color: var(--color-accent-text);
+  font-weight: 800;
+}
+
+/* FLEX 3: kepala bagian harga, judul di kiri dan keterangan di kanan */
+.harga-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.harga-header h2 { margin: 0; }
+.harga-header p { margin: 0; color: var(--muted); font-size: .9rem; }
