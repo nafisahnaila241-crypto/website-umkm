@@ -148,7 +148,7 @@ audio:focus-visible {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1fr;
   align-content: center;
   column-gap: clamp(24px, 5vw, 40px);
   row-gap: 0;
@@ -161,7 +161,7 @@ audio:focus-visible {
   box-shadow: var(--shadow);
 }
 .hero > * { grid-column: 1; }
-.hero > img { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
+.hero > img { align-self: center; }
 .hero h1 {
   margin: 0;
   font-size: clamp(3rem, 8vw, 5.5rem);
@@ -307,10 +307,10 @@ tbody tr:hover td, tbody tr:hover th { background: #fff8ef; }
   .nav { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px 24px; }
 }
 
-/* BP-2 (konten): hero dua kolom baru terbaca jika kolom teks >= ~300px */
-@media (max-width: 760px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero > img { grid-column: 1; grid-row: auto; }
+/* BP-2 (konten): hero dua kolom baru nyaman jika kolom teks >= ~280px (viewport >= 761px) */
+@media (min-width: 47.5625em) {
+  .hero { grid-template-columns: 1.05fr 0.95fr; }
+  .hero > img { grid-column: 2; grid-row: 1 / span 4; }
 }
 
 /* ---------- Form kontak (P07) ---------- */
@@ -374,3 +374,32 @@ fieldset input[type="radio"] { width: 20px; height: 20px; margin: 0; accent-colo
   border: 1px solid var(--cream-200);
   border-radius: var(--radius-control);
 }
+
+/* ---------- P09: kartu produk dinamis (status stok dan label) ---------- */
+.product-card .meta {
+  margin: 0 0 6px;
+  color: var(--coffee-700);
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.product-card .badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 700;
+}
+.badge--unggulan { background: var(--coffee-800); color: var(--cream-50); }
+.badge--tersedia { background: var(--matcha-200); color: var(--matcha-400); border-color: var(--color-border-card); }
+.badge--terbatas { background: #fff1cf; color: #6b4a00; border-color: #e8cf8f; }
+.badge--habis { background: #f6dcd8; color: #8a1f12; border-color: #e5b4ac; }
+#ringkasan-produk { color: var(--muted); }
