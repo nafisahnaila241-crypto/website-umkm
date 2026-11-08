@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Kopakopi - Website UMKM</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/app.js" defer></script>
+      <noscript><style>.nav-toggle{display:none}.nav ul{display:flex}</style></noscript>
   </head>
   <body>
     <a class="skip-link" href="#konten">Lewati ke konten utama</a>
     <header class="site-header">
       <nav class="nav" aria-label="Navigasi utama">
         <a class="brand" href="index.html">Kopakopi</a>
-        <ul>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-utama" aria-label="Buka menu">
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+        </button>
+        <ul id="menu-utama">
           <li><a aria-current="page" href="index.html">Beranda</a></li>
           <li><a href="tentang.html">Tentang Kami</a></li>
           <li><a href="produk.html">Produk</a></li>
@@ -32,7 +39,7 @@
 
       <section aria-labelledby="produk-title">
         <h2 id="produk-title">Bestseller</h2>
-        <div class="product-list">
+        <div class="product-list" id="daftar-bestseller">
           <article class="product-card">
             <h3>Hazelnut Latte</h3>
             <p>Perpaduan kopi dan susu dengan rasa kacang hazel yang manis.</p>

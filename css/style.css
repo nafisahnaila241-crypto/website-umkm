@@ -88,11 +88,12 @@ audio:focus-visible {
 .nav {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 12px var(--space-page-x);
+  padding: 8px var(--space-page-x);
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 24px;
 }
 
 .brand {
@@ -104,17 +105,47 @@ audio:focus-visible {
 }
 
 
-.nav ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 0 14px;
+/* Menu hamburger (feedback P09): mobile-first, menu tertutup sampai tombol ditekan */
+.nav-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: var(--tap-min);
+  height: var(--tap-min);
   padding: 0;
+  color: var(--coffee-950);
+  background: transparent;
+  border: 1.5px solid var(--coffee-500);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+.nav-toggle:hover { background: var(--cream-200); }
+.nav-toggle__bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .nav-toggle__bar { transition: none; } }
+
+.nav ul {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  padding: 4px 0 8px;
   margin: 0;
   list-style: none;
 }
+.nav ul.is-open { display: flex; }
 .nav a:not(.brand) {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   min-height: var(--tap-min);
   padding: 4px 2px;
@@ -301,10 +332,13 @@ tbody tr:hover td, tbody tr:hover th { background: #fff8ef; }
 }
 .site-footer p { margin: 0; }
 
-/* BP-1 (konten): brand + 5 tautan muat satu baris */
+/* BP-1 (konten): brand + 5 tautan muat satu baris; di bawahnya menu jadi hamburger */
 @media (min-width: 34em) {
   .site-header { position: sticky; top: 0; }
-  .nav { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px 24px; }
+  .nav { padding-block: 12px; }
+  .nav-toggle { display: none; }
+  .nav ul, .nav ul.is-open { display: flex; flex-direction: row; flex-wrap: wrap; width: auto; padding: 0; gap: 0 14px; }
+  .nav a:not(.brand) { display: inline-flex; }
 }
 
 /* BP-2 (konten): hero dua kolom baru nyaman jika kolom teks >= ~280px (viewport >= 761px) */
