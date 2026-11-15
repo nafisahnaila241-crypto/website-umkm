@@ -6,7 +6,6 @@
     <title>Produk Kopakopi - Website UMKM</title>
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/app.js" defer></script>
-      <noscript><style>.nav-toggle{display:none}.nav ul{display:flex}</style></noscript>
   </head>
   <body>
     <a class="skip-link" href="#konten">Lewati ke konten utama</a>
@@ -45,8 +44,14 @@
         <h2 id="katalog-title">Katalog Produk</h2>
         <p id="ringkasan-produk" aria-live="polite"></p>
         <p id="rekomendasi-produk"></p>
+        <div class="filter-group" role="group" aria-label="Filter kategori produk">
+          <button type="button" class="filter-button is-active" data-filter="semua" aria-pressed="true">Semua</button>
+          <button type="button" class="filter-button" data-filter="Minuman" aria-pressed="false">Minuman</button>
+          <button type="button" class="filter-button" data-filter="Biji kopi" aria-pressed="false">Biji kopi</button>
+          <button type="button" class="filter-button" data-filter="Makanan" aria-pressed="false">Makanan</button>
+        </div>
+        <p id="produk-status" aria-live="polite"></p>
         <div class="product-list" id="produk-dinamis"></div>
-        <noscript><p>Aktifkan JavaScript untuk melihat katalog; daftar harga tersedia pada tabel di bawah.</p></noscript>
       </section>
 
       <section aria-labelledby="harga-title">

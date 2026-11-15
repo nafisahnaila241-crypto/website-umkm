@@ -1,4 +1,3 @@
-// ---------- 0. Menu hamburger  ----------
 const tombolMenu = document.querySelector(".nav-toggle");
 const daftarMenu = document.querySelector("#menu-utama");
 
@@ -12,7 +11,6 @@ if (tombolMenu && daftarMenu) {
   tombolMenu.addEventListener("click", () => {
     aturMenu(!daftarMenu.classList.contains("is-open"));
   });
-  // Tombol Escape menutup menu dan mengembalikan fokus ke tombol
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && daftarMenu.classList.contains("is-open")) {
       aturMenu(false);
@@ -21,8 +19,7 @@ if (tombolMenu && daftarMenu) {
   });
 }
 
-// ---------- 1. Data: array of object ----------
-const STOK_MENIPIS = 5; // stok <= 5 dianggap terbatas
+const STOK_MENIPIS = 5;
 
 const produkUMKM = [
   { id: 1, nama: "Hazelnut Latte", kategori: "Minuman", harga: 25000, stok: 12, unggulan: true,
@@ -39,13 +36,10 @@ const produkUMKM = [
     deskripsi: "Hazelnut latte kemasan botol besar untuk dibagi bersama." },
 ];
 
-// ---------- 2. Function ----------
-// Input: angka. Return: teks rupiah. Efek samping: tidak ada.
 function formatRupiah(nilai) {
   return `Rp${nilai.toLocaleString("id-ID")}`;
 }
 
-// Input: stok (angka). Return: object { label, kelas }. Efek samping: tidak ada.
 function statusStok(stok) {
   if (stok === 0) {
     return { label: "Habis", kelas: "habis" };
@@ -55,40 +49,77 @@ function statusStok(stok) {
   return { label: `Tersedia (${stok})`, kelas: "tersedia" };
 }
 
-// Input: satu object produk. Return: string markup kartu. Efek samping: tidak ada.
-function buatKartuProduk(produk) {
+function buatElemenProduk(produk) {
   const status = statusStok(produk.stok);
-  const labelUnggulan = produk.unggulan ? `<span class="badge badge--unggulan">Bestseller</span>` : "";
-  return `
-    <article class="product-card">
-      <p class="meta">${produk.kategori}</p>
-      <h3>${produk.nama}</h3>
-      <p class="badges">
-        ${labelUnggulan}
-        <span class="badge badge--${status.kelas}">${status.label}</span>
-      </p>
-      <p>${produk.deskripsi}</p>
-      <p class="price">${formatRupiah(produk.harga)}</p>
-    </article>`;
+
+  const kartu = document.createElement("article");
+  kartu.classList.add("product-card");
+
+  const kategori = document.createElement("p");
+  kategori.classList.add("meta");
+  kategori.textContent = produk.kategori;
+
+  const nama = document.createElement("h3");
+  nama.textContent = produk.nama;
+
+  const badges = document.createElement("p");
+  badges.classList.add("badges");
+  if (produk.unggulan) {
+    const labelUnggulan = document.createElement("span");
+    labelUnggulan.classList.add("badge", "badge--unggulan");
+    labelUnggulan.textContent = "Bestseller";
+    badges.append(labelUnggulan);
+  }
+  const labelStok = document.createElement("span");
+  labelStok.classList.add("badge", `badge--${status.kelas}`);
+  labelStok.textContent = status.label;
+  badges.append(labelStok);
+
+  const deskripsi = document.createElement("p");
+  deskripsi.textContent = produk.deskripsi;
+
+  const harga = document.createElement("p");
+  harga.classList.add("price");
+  harga.textContent = formatRupiah(produk.harga);
+
+  kartu.append(kategori, nama, badges, deskripsi, harga);
+  return kartu;
 }
 
-// filter: ambil beberapa elemen yang memenuhi syarat (hasilnya array baru)
-function filterTersedia(daftar) {
-  return daftar.filter((produk) => produk.stok > 0);
+function buatEmptyState(kategori) {
+  const kosong = document.createElement("p");
+  kosong.classList.add("empty-state");
+  kosong.textContent = `Belum ada produk untuk kategori ${kategori}.`;
+  return kosong;
 }
 
-// find: ambil SATU elemen pertama yang cocok (bukan array)
-function cariRekomendasi(daftar) {
-  return daftar.find((produk) => produk.unggulan && produk.stok > 0);
+function filterKategori(daftar, kategori) {
+  if (kategori === "semua") {
+    return daftar;
+  }
+  return daftar.filter((produk) => produk.kategori === kategori);
 }
 
-// map: ubah tiap produk menjadi markup (jumlah elemen sama, bentuknya berbeda)
-function renderProduk(wadah, daftar) {
-  wadah.innerHTML = daftar.map(buatKartuProduk).join("");
+function renderProduk(kategoriAktif) {
+  const hasil = filterKategori(produkUMKM, kategoriAktif);
+  wadahProduk.replaceChildren();
+  if (hasil.length === 0) {
+    wadahProduk.append(buatEmptyState(kategoriAktif));
+  } else {
+    wadahProduk.append(...hasil.map(buatElemenProduk));
+  }
+  const namaKategori = kategoriAktif === "semua" ? "semua kategori" : `kategori ${kategoriAktif}`;
+  teksStatus.textContent = `Menampilkan ${hasil.length} produk (${namaKategori}).`;
 }
 
-// for...of: dipakai karena satu perulangan mengisi tiga penghitung sekaligus
-// (reduce atau tiga filter terpisah akan lebih panjang dan membingungkan).
+function tandaiTombolAktif(tombolDipilih) {
+  tombolFilter.forEach((tombol) => {
+    const aktif = tombol === tombolDipilih;
+    tombol.classList.toggle("is-active", aktif);
+    tombol.setAttribute("aria-pressed", String(aktif));
+  });
+}
+
 function hitungRingkasan(daftar) {
   let tersedia = 0;
   let habis = 0;
@@ -104,38 +135,53 @@ function hitungRingkasan(daftar) {
   return { tersedia, habis, nilaiStok };
 }
 
-// ---------- 3. Render ke DOM (hanya jika elemennya ada di halaman) ----------
+function filterTersedia(daftar) {
+  return daftar.filter((produk) => produk.stok > 0);
+}
+
+function cariRekomendasi(daftar) {
+  return daftar.find((produk) => produk.unggulan && produk.stok > 0);
+}
+
+const wadahProduk = document.querySelector("#produk-dinamis");
+const teksStatus = document.querySelector("#produk-status");
+const tombolFilter = document.querySelectorAll("[data-filter]");
+const wadahBestseller = document.querySelector("#daftar-bestseller");
+const teksRingkasan = document.querySelector("#ringkasan-produk");
+const teksRekomendasi = document.querySelector("#rekomendasi-produk");
+
 const produkTersedia = filterTersedia(produkUMKM);
 const rekomendasi = cariRekomendasi(produkUMKM);
 const ringkasan = hitungRingkasan(produkUMKM);
 
-// Halaman utama: produk unggulan yang masih tersedia
-const wadahBestseller = document.querySelector("#daftar-bestseller");
 if (wadahBestseller) {
-  renderProduk(wadahBestseller, produkTersedia.filter((produk) => produk.unggulan));
+  const produkBestseller = produkTersedia.filter((produk) => produk.unggulan);
+  wadahBestseller.replaceChildren(...produkBestseller.map(buatElemenProduk));
 }
 
-// Halaman produk: semua produk, ringkasan, dan rekomendasi
-const wadahKatalog = document.querySelector("#produk-dinamis");
-if (wadahKatalog) {
-  renderProduk(wadahKatalog, produkUMKM);
+if (wadahProduk && teksStatus) {
+  let kategoriAktif = "semua";
+  renderProduk(kategoriAktif);
+
+  tombolFilter.forEach((tombol) => {
+    tombol.addEventListener("click", (event) => {
+      kategoriAktif = event.currentTarget.dataset.filter;
+      tandaiTombolAktif(event.currentTarget);
+      renderProduk(kategoriAktif);
+    });
+  });
 }
 
-const teksRingkasan = document.querySelector("#ringkasan-produk");
 if (teksRingkasan) {
   teksRingkasan.textContent = `${produkUMKM.length} produk: ${produkTersedia.length} tersedia, ${ringkasan.habis} habis.`;
 }
-
-const teksRekomendasi = document.querySelector("#rekomendasi-produk");
 if (teksRekomendasi && rekomendasi) {
   teksRekomendasi.textContent = `Rekomendasi hari ini: ${rekomendasi.nama} (${formatRupiah(rekomendasi.harga)}).`;
 }
 
-// ---------- 4. Debugging lewat Console ----------
 console.table(produkUMKM);
 console.table(produkTersedia, ["nama", "stok"]);
 console.log("Rekomendasi:", rekomendasi);
-// forEach: dipakai karena hanya menjalankan efek samping (mencetak log) tanpa nilai kembalian.
 produkUMKM.forEach((produk) => {
   console.log(`${produk.nama} -> ${statusStok(produk.stok).label}`);
 });

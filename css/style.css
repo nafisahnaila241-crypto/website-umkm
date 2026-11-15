@@ -437,3 +437,38 @@ fieldset input[type="radio"] { width: 20px; height: 20px; margin: 0; accent-colo
 .badge--terbatas { background: #fff1cf; color: #6b4a00; border-color: #e8cf8f; }
 .badge--habis { background: #f6dcd8; color: #8a1f12; border-color: #e5b4ac; }
 #ringkasan-produk { color: var(--muted); }
+
+/* ---------- P11: filter kategori dan empty state ---------- */
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0 8px;
+}
+.filter-button {
+  min-height: var(--tap-min);
+  padding: 8px 18px;
+  color: var(--coffee-800);
+  background: var(--white);
+  border: 1.5px solid var(--coffee-500);
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.filter-button:hover { background: var(--cream-200); }
+.filter-button.is-active {
+  color: var(--cream-50);
+  background: var(--coffee-800);
+  border-color: var(--coffee-800);
+}
+#produk-status { margin: 0 0 16px; color: var(--muted); }
+.empty-state {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+  background: var(--cream-50);
+  border: 2px dashed var(--coffee-500);
+  border-radius: var(--radius-card);
+}
